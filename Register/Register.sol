@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 contract realEstate {
 	// Declare state variables in this section
@@ -242,7 +242,7 @@ contract realEstate {
    function withdraw() payable public {          //revenues can be withdrawn from individual shareholders (government can too withdraw its own revenues)
         uint256 revenue = revenues[msg.sender];
         revenues[msg.sender] = 0;
-        (msg.sender).transfer(revenue);
+        payable(msg.sender).transfer(revenue);
         emit Withdrawal(msg.sender, revenue);
    }
 
@@ -282,6 +282,6 @@ contract realEstate {
 
 //falback
     receive () external payable {                   //fallback function returns ether back to origin
-        (msg.sender).transfer(msg.value);
+        payable(msg.sender).transfer(msg.value);
         }
 }
